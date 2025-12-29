@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  sql_practice_db:
+    image: postgres:14
+    container_name: sql_practice_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: pagila
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./pagila-schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      - ./pagila-data.sql:/docker-entrypoint-initdb.d/2-data.sql

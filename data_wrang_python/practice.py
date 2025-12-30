@@ -311,6 +311,40 @@ housing["value_category"] = housing["median_house_value"]\
 print(housing.head(5))
 
 
+housing["household_size"] = np.where(housing["people_per_household"] > 3, "large", "small")
+print(housing.head())
+
+housing["household_size"] = housing["people_per_household"]\
+.apply(lambda x: "large" if x > 3 else "small")
+print(housing.head())
+
+print(housing.groupby("household_size")["median_house_value"].mean())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

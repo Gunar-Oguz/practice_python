@@ -319,6 +319,36 @@ housing["household_size"] = housing["people_per_household"]\
 print(housing.head())
 
 print(housing.groupby("household_size")["median_house_value"].mean())
+conditions = [
+    housing["rooms_per_household"] < 4, 
+    housing["rooms_per_household"].between(4,6),
+    housing["rooms_per_household"] >= 6
+]
+
+choices = ["small", "medium", "large"]
+
+housing["room_size"] = np.select(conditions, choices, default = "unknown")
+print(housing.head(4))
+
+print(housing.columns.to_list())
+
+# housing1: Location and price info
+housing1 = housing[["longitude", "latitude", "ocean_proximity", "median_house_value", "med_income"]].copy()
+housing1["house_id"] = range(len(housing1))
+
+# housing2: Size info
+housing2 = housing[["total_rooms", "total_bedrooms", "population", "households"]].copy()
+housing2["house_id"] = range(len(housing2))
+
+print("housing1 shape:", housing1.shape)
+print("housing2 shape:", housing2.shape)
+print(housing1.head())
+print(housing2.head())
+
+print(pd.merge(housing1, housing2, on = "house_id"))
+
+
+
 
 
 

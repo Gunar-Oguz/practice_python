@@ -195,6 +195,26 @@ print(
     .sort_values(ascending=True)
 )
 
+print(housing.isna().sum())
+
+print(housing.isna())
+
+print(housing[housing["total_bedrooms"].isna()])
+
+print(housing["total_bedrooms"].isna().sum())
+
+housing_clean = housing.dropna(subset = ["total_bedrooms"])
+
+print(housing_clean)
+print(housing_clean["total_bedrooms"].isna().sum())
+
+print(housing["total_bedrooms"].isna().sum())
+
+housing_replaced = housing["total_bedrooms"].fillna(0)
+print(housing_replaced.isna().sum())
+
+housing["total_bedrooms_filled"] = housing["total_bedrooms"].fillna(housing["total_bedrooms"].mean())
+print(housing.groupby("ocean_proximity")["total_bedrooms_filled"].mean())
 
 
 

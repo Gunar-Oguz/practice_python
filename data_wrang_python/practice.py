@@ -275,6 +275,45 @@ print(housing.dtypes)
 housing["housing_age"] = housing["housing_age"].astype(int)
 print(housing.dtypes)
 
+print(housing["ocean_proximity"].value_counts())
+
+print(housing.columns.to_list())
+print(housing["income_level"].value_counts())
+
+print(round(housing["income_category"].value_counts(normalize = True), 1))
+
+print(housing[housing["income_level"] == "high"]\
+.groupby("ocean_proximity")["median_house_value"]\
+.mean()\
+.sort_values(ascending=False))
+
+print(housing[housing["people_per_household"] > 3]\
+.groupby("income_category").size())
+
+print(housing.nlargest(10, "rooms_per_household")[["ocean_proximity",
+                                             "rooms_per_household",
+                                              "median_house_value" ]])
+
+
+print(housing[(housing["ocean_proximity"] == "NEAR BAY")
+               | (housing["ocean_proximity"] == "NEAR OCEAN")]\
+.groupby("age_category")["med_income"] \
+.mean()
+.sort_values(ascending = True))
+
+housing["value_category"] = np.where(
+    housing["median_house_value"] > 200000, "expensive", "affordable"
+)
+print(housing.head())
+
+housing["value_category"] = housing["median_house_value"]\
+.apply(lambda x: "expensive" if x > 200000 else "affordable")
+print(housing.head(5))
+
+
+
+
+
 
 
 

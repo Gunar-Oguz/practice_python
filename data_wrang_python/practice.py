@@ -216,9 +216,64 @@ print(housing_replaced.isna().sum())
 housing["total_bedrooms_filled"] = housing["total_bedrooms"].fillna(housing["total_bedrooms"].mean())
 print(housing.groupby("ocean_proximity")["total_bedrooms_filled"].mean())
 
+housing["country"] = "USA"
+print(housing.head())
 
+housing["state"] = "California"
+print(housing.head())
 
+housing["data_source"] = "california_census"
+print(housing.head())
+print(housing.columns.to_list())
 
+housing["rooms_per_household"] = housing["total_rooms"] / housing["households"]
+print(housing.head())
+
+housing["people_per_household"] = housing["population"] / housing["households"]
+
+print(housing.head())
+
+housing["age_category"] = np.where(
+    housing["housing_median_age"] > 30,
+      "old", "new")
+housing["income_level"] = np.where(
+    housing["median_income"] > 5, "high", "low"
+
+)
+print(housing.head())
+housing["half_income"] = housing["median_income"].apply(lambda x: x * 2)
+print(housing.head())
+
+housing["income_category"] = housing["median_income"]\
+.apply(lambda x: "low" if x < 3 else ("medium" if x < 6 else "high"))
+
+print(housing.head(0))
+
+housing["ocean_proximity"].replace("INLAND", "INTERIOR")
+print(housing.head(10))
+
+housing["income_category"] = housing["income_category"].replace("high", "very_high")
+print(housing.head())
+
+housing = housing.rename(columns = {"median_income": "med_income"})
+print(housing.head(5))
+housing = housing.rename(columns = {'housing_median_age': "housing_age"})
+print(housing.head())
+
+housing = housing.drop("country", axis = 1)
+print(housing.columns.to_list())
+
+housing = housing.drop("data_source", axis = 1)
+print(housing.columns.to_list())
+
+print(housing.nlargest(10, "half_income"))
+
+print(housing.loc[0, "half_income"])
+
+print(housing.dtypes)
+
+housing["housing_age"] = housing["housing_age"].astype(int)
+print(housing.dtypes)
 
 
 
